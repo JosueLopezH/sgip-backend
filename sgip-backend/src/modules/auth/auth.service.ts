@@ -4,6 +4,7 @@ import * as crypto from 'crypto';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -33,4 +34,5 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
 }
