@@ -5,6 +5,9 @@ import appConfig from './core/config/app.config';
 import { JwtAuthGuard } from './core/guards/jwt-auth.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
 
 @Module({
   imports: [
@@ -12,7 +15,10 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     UsersModule,
   ],
+  controllers: [AppController],
   providers: [
+    AppService,
+
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

@@ -1,14 +1,18 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
- 
+
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
- 
-// Enum de estados para proyectos y tareas
+
 enum Status {
   PENDING
   STARTED
@@ -16,8 +20,7 @@ enum Status {
   COMPLETED
   CANCELED
 }
- 
-// Enum de roles de usuario en el sistema
+
 enum Role {
   ADMIN
   PM
@@ -25,7 +28,7 @@ enum Role {
   ANALYST
   VIEWER
 }
- 
+
 model User {
   id        String    @id @default(cuid())
   name      String    @db.VarChar(128)
@@ -36,12 +39,12 @@ model User {
   active    Boolean   @default(true)
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
- 
-  // Relaciones: un usuario puede administrar proyectos y tener tareas asignadas
+
   projects  Project[]
   tasks     Task[]
 }
- 
+
+
 model Project {
   id          String    @id @default(cuid())
   name        String    @db.VarChar(128)
@@ -52,13 +55,12 @@ model Project {
   endDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
- 
-  // Un proyecto tiene un manager (FK a User)
+
   managerId String
   manager   User   @relation(fields: [managerId], references: [id])
   tasks     Task[]
 }
- 
+
 model Task {
   id          String    @id @default(cuid())
   name        String    @db.VarChar(128)
@@ -67,8 +69,7 @@ model Task {
   dueDate     DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
- 
-  // Una tarea pertenece a un proyecto y puede estar asignada a un usuario
+
   projectId  String
   project    Project @relation(fields: [projectId], references: [id])
   assigneeId String?
