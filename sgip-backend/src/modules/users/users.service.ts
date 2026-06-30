@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import * as crypto from 'crypto';
 import { RegisterDto } from '../auth/dto/register.dto';
 
+
 @Injectable()
 export class UsersService {
   private prisma = new PrismaClient();
@@ -41,4 +42,5 @@ export class UsersService {
     const { password: _, ...result } = user;
     return result;
   }
+
 }
