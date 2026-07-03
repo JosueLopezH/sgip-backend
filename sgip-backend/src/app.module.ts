@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProjectsModule } from './modules/projects/projects.module';
 
 
 @Module({
@@ -14,6 +15,7 @@ import { AppService } from './app.service';
     ConfigModule.forRoot({ isGlobal: true, load: [appConfig] }),
     AuthModule,
     UsersModule,
+    ProjectsModule
   ],
   controllers: [AppController],
   providers: [
@@ -25,4 +27,4 @@ import { AppService } from './app.service';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
