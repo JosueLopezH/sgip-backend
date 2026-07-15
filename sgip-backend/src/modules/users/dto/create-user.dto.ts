@@ -15,20 +15,22 @@ export enum Role {
 }
 
 export class CreateUserDto {
-  @IsString()
+  @IsString({ message: 'El nombre debe ser un texto válido' })
   name: string;
 
-  @IsString()
+  @IsString({ message: 'El nombre de usuario debe ser un texto válido' })
   username: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: 'El correo electrónico no tiene un formato válido' })
   email: string;
 
-  @IsString()
-  @MinLength(6)
+  @IsString({ message: 'La contraseña debe ser un texto válido' })
+  @MinLength(6, { message: 'La contraseña debe tener al menos 6 caracteres' })
   password: string;
 
   @IsOptional()
-  @IsEnum(Role)
+  @IsEnum(Role, {
+    message: `El rol debe ser uno de los siguientes: ${Object.values(Role).join(', ')}`,
+  })
   role?: Role;
 }
