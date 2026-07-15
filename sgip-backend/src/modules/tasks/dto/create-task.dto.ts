@@ -1,27 +1,27 @@
 import { IsBoolean, IsDateString, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateTaskDto {
-  @IsString()
-  @MaxLength(128)
+  @IsString({ message: 'El nombre debe ser una cadena de texto' })
+  @MaxLength(128, { message: 'El nombre no puede exceder los 128 caracteres' })
   name: string;
 
   @IsOptional()
-  @IsString()
-  @MaxLength(512)
+  @IsString({ message: 'La descripción debe ser una cadena de texto' })
+  @MaxLength(512, { message: 'La descripción no puede exceder los 512 caracteres' })
   description?: string;
 
   @IsOptional()
-  @IsBoolean()
+  @IsBoolean({ message: 'El campo completado debe ser un valor booleano' })
   completed?: boolean;
 
   @IsOptional()
-  @IsDateString()
+  @IsDateString({}, { message: 'La fecha de vencimiento debe tener un formato de fecha válido' })
   dueDate?: string;
 
-  @IsString()
+  @IsString({ message: 'El ID del proyecto debe ser una cadena de texto' })
   projectId: string;
 
   @IsOptional()
-  @IsString()
+  @IsString({ message: 'El ID del responsable debe ser una cadena de texto' })
   assigneeId?: string;
 }
