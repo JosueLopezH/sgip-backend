@@ -1,4 +1,5 @@
 import { IsDateString, IsEnum, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+
 import { Status } from './create-project.dto';
 
 export class UpdateProjectDto {
@@ -26,5 +27,6 @@ export class UpdateProjectDto {
 
   @IsOptional()
   @IsDateString({}, { message: 'La fecha de finalización debe tener un formato de fecha válido' })
+ 
   endDate?: string;
 }

@@ -31,4 +31,5 @@ import { ProjectsModule } from './modules/projects/projects.module';
     },
   ],
 })
-export class AppModule { }
+
+export class AppModule {}

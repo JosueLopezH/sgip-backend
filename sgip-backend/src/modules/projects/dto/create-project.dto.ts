@@ -1,5 +1,6 @@
 import { IsDateString, IsEnum, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 
+
 export enum Status {
   PENDING = 'PENDING',
   STARTED = 'STARTED',
@@ -35,5 +36,6 @@ export class CreateProjectDto {
   endDate?: string;
 
   @IsString({ message: 'El ID del gerente debe ser una cadena de texto' })
+
   managerId: string;
 }
