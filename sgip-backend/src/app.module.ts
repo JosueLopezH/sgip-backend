@@ -18,7 +18,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
     }),
     AuthModule,
     UsersModule,
-    ProjectsModule
+    ProjectsModule,
     TasksModule,
   ],
   controllers: [AppController],
