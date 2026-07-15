@@ -18,6 +18,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
     }),
     AuthModule,
     UsersModule,
+    ProjectsModule,
     TasksModule,
     ProjectsModule
   ],
