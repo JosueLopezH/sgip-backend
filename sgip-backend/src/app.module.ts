@@ -20,6 +20,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
     UsersModule,
     ProjectsModule,
     TasksModule,
+    ProjectsModule
   ],
   controllers: [AppController],
   providers: [
@@ -30,4 +31,5 @@ import { ProjectsModule } from './modules/projects/projects.module';
     },
   ],
 })
+
 export class AppModule {}
