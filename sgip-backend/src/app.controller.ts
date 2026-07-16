@@ -1,6 +1,16 @@
 import { Controller, Get, Request } from '@nestjs/common';
+import { Request as ExpressRequest } from 'express';
 import { Public } from './core/decorators/public.decorator';
 import { AppService } from './app.service';
+
+interface AuthenticatedRequest extends ExpressRequest {
+  user: {
+    id: string;
+    username: string;
+    role: string;
+    [key: string]: unknown;
+  };
+}
 
 @Controller()
 export class AppController {
@@ -13,7 +23,7 @@ export class AppController {
   }
 
   @Get('perfil')
-  getPerfil(@Request() req: any): object {
+  getPerfil(@Request() req: AuthenticatedRequest): object {
     return { mensaje: 'Ruta protegida', usuario: req.user };
   }
 }

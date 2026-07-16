@@ -9,6 +9,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectsModule } from './modules/projects/projects.module';
+import { BudgetsModule } from './modules/budgets/budgets.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ProjectsModule } from './modules/projects/projects.module';
     UsersModule,
     ProjectsModule,
     TasksModule,
-    ProjectsModule
+    ProjectsModule,
+    BudgetsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -31,5 +33,4 @@ import { ProjectsModule } from './modules/projects/projects.module';
     },
   ],
 })
-
 export class AppModule {}
