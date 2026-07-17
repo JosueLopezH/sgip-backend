@@ -1,35 +1,61 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectDto, Status } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+
+interface FindAllParams {
+  page?: string;
+  limit?: string;
+  status?: Status;
+  managerId?: string;
+}
 
 @Injectable()
 export class ProjectsService {
   private prisma = new PrismaClient();
 
-  async findAll() {
-    return this.prisma.project.findMany({
-      include: {
-        manager: {
-          select: { id: true, name: true, username: true },
+  async findAll({ page, limit, status, managerId }: FindAllParams) {
+    const pageNum = parseInt(page ?? '1', 10);
+    const limitNum = parseInt(limit ?? '10', 10);
+    const skip = (pageNum - 1) * limitNum;
+
+    const where: any = {};
+    if (status) where.status = status;
+    if (managerId) where.managerId = managerId;
+
+    const [data, total] = await Promise.all([
+      this.prisma.project.findMany({
+        where,
+        skip,
+        take: limitNum,
+        include: {
+          manager: { select: { id: true, name: true, username: true } },
+          tasks: true,
         },
-        tasks: true,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.project.count({ where }),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page: pageNum,
+        limit: limitNum,
+        totalPages: Math.ceil(total / limitNum),
       },
-    });
+    };
   }
 
   async findOne(id: string) {
     const project = await this.prisma.project.findUnique({
       where: { id },
       include: {
-        manager: {
-          select: { id: true, name: true, username: true },
-        },
+        manager: { select: { id: true, name: true, username: true } },
         tasks: {
           include: {
-            assignee: {
-              select: { id: true, name: true, username: true },
-            },
+            assignee: { select: { id: true, name: true, username: true } },
           },
         },
       },
@@ -50,9 +76,7 @@ export class ProjectsService {
         managerId: dto.managerId,
       },
       include: {
-        manager: {
-          select: { id: true, name: true, username: true },
-        },
+        manager: { select: { id: true, name: true, username: true } },
       },
     });
   }
@@ -67,9 +91,7 @@ export class ProjectsService {
         endDate: dto.endDate ? new Date(dto.endDate) : undefined,
       },
       include: {
-        manager: {
-          select: { id: true, name: true, username: true },
-        },
+        manager: { select: { id: true, name: true, username: true } },
       },
     });
   }
