@@ -8,11 +8,8 @@ export class BudgetsService {
   private prisma = new PrismaClient();
 
   async findByProject(projectId: string) {
-    const project = await this.prisma.project.findUnique({
-      where: { id: projectId },
-    });
-    if (!project)
-      throw new NotFoundException(`Proyecto con id ${projectId} no encontrado`);
+    const project = await this.prisma.project.findUnique({ where: { id: projectId } });
+    if (!project) throw new NotFoundException(`Proyecto con id ${projectId} no encontrado`);
 
     const expenses = await this.prisma.expense.findMany({
       where: { projectId },
