@@ -42,6 +42,8 @@ model User {
 
   projects  Project[]
   tasks     Task[]
+  expense Expense[]
+  notifications Notification[]
 }
 
 
@@ -59,6 +61,7 @@ model Project {
   managerId String
   manager   User   @relation(fields: [managerId], references: [id])
   tasks     Task[]
+  expense Expense[]
 }
 
 model Task {
@@ -74,4 +77,37 @@ model Task {
   project    Project @relation(fields: [projectId], references: [id])
   assigneeId String?
   assignee   User?   @relation(fields: [assigneeId], references: [id])
+}
+
+model Expense {
+  id          String    @id @default(cuid())
+  concept     String    @db.VarChar(128)
+  amount      Decimal   @db.Decimal(12, 2)
+  date        DateTime
+  notes       String?   @db.VarChar(512)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id])
+  registeredBy   String
+  user        User      @relation(fields: [registeredBy], references: [id])
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ALERT
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  title     String           @db.VarChar(128)
+  message   String           @db.VarChar(512)
+  type      NotificationType @default(INFO)
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
 }
