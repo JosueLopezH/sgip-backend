@@ -43,6 +43,7 @@ model User {
   projects  Project[]
   tasks     Task[]
   expense Expense[]
+  notifications Notification[]
 }
 
 
@@ -91,4 +92,22 @@ model Expense {
   project     Project   @relation(fields: [projectId], references: [id])
   registeredBy   String
   user        User      @relation(fields: [registeredBy], references: [id])
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ALERT
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  title     String           @db.VarChar(128)
+  message   String           @db.VarChar(512)
+  type      NotificationType @default(INFO)
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
 }

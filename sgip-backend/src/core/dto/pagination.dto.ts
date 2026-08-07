@@ -8,4 +8,4 @@ export class PaginationDto {
     @IsOptional()
     @IsNumberString({}, { message: 'El límite debe ser un número' })
     limit?: string;
-}
+}       
