@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "types": [
+      "jest",
+      "node"
+    ],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -9,7 +13,6 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
