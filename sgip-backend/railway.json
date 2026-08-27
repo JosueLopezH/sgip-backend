@@ -8,7 +8,7 @@
   "deploy": {
     "runtime": "V2",
     "numReplicas": 1,
-    "startCommand": "npx prisma migrate deploy && npx prisma db seed && npm run start:prod",
+    "startCommand": "npx prisma migrate deploy && npx prisma db seed && node dist/src/main.js",
     "sleepApplication": false,
     "useLegacyStacker": false,
     "ipv6EgressEnabled": false,
