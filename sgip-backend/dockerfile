@@ -16,4 +16,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npx prisma migrate deploy && echo 'Migraciones OK' && npx prisma db seed && echo 'Seed OK' && node dist/src/main.js && echo 'App OK'"]
+CMD ["sh", "-c", "npx prisma migrate deploy; echo 'Prisma done'; ls dist/src/; node dist/src/main.js"]
