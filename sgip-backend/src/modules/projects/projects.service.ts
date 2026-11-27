@@ -98,7 +98,11 @@ export class ProjectsService {
 
   async remove(id: string) {
     await this.findOne(id);
-    await this.prisma.project.delete({ where: { id } });
+    await this.prisma.$transaction([
+      this.prisma.task.deleteMany({ where: { projectId: id } }),
+      this.prisma.expense.deleteMany({ where: { projectId: id } }),
+      this.prisma.project.delete({ where: { id } }),
+    ]);
     return { mensaje: 'Proyecto eliminado correctamente' };
   }
 }
